@@ -1,4 +1,9 @@
 defmodule PlugCheckup.Check do
+  @moduledoc """
+  Defines the structure of a check.
+  Executes a check updating its result and execution time. Also, it transforms any exception into a tuple {:error, reason}
+  """
+
   defstruct [:name, :module, :function, :result, :time]
 
   def execute(check) do

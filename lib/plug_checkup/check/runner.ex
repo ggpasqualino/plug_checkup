@@ -1,4 +1,8 @@
 defmodule PlugCheckup.Check.Runner do
+  @moduledoc """
+  Executes the given checks asynchronously respecting the given timeout for each of the checks,
+  and decides whether the execution was successful or not.
+  """
   alias PlugCheckup.Check
 
   def async_run(checks, timeout) do

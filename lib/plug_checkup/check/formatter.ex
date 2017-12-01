@@ -41,11 +41,9 @@ defmodule PlugCheckup.Check.Formatter do
         "time" => check.time,
         "healthy" => check.result == :ok,
         "error" =>
-          if check.result == :ok do
-            nil
-          else
-            {:error, reason} = check.result
-            reason
+          case check.result do
+            :ok -> nil
+            {:error, reason} -> reason
           end
       }
   end

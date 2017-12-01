@@ -27,6 +27,7 @@ defmodule PlugCheckup.Mixfile do
     [
       files: ["lib", "mix.exs", "README.md"],
       maintainers: ["Guilherme Pasqualino"],
+      licenses: [],
       links: %{"GitHub" => "https://github.com/ggpasqualino/plug_checkup"}
     ]
   end

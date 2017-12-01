@@ -21,10 +21,8 @@ defmodule PlugCheckup.Check do
   end
 
   defp safe_execute(check) do
-    try do
-      apply(check.module, check.function, [])
-    rescue
-      e -> {:error, e.message}
-    end
+    apply(check.module, check.function, [])
+  rescue
+    e -> {:error, e.message}
   end
 end

@@ -15,7 +15,8 @@ defmodule PlugCheckup.Check do
     time_before = System.monotonic_time
     result = apply(fun, args)
     time_after = System.monotonic_time
-    time = System.convert_time_unit(time_after - time_before, :native, :microsecond)
+    time = time_after - time_before
+    time = System.convert_time_unit(time, :native, :microsecond)
 
     {time, result}
   end

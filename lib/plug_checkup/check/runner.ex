@@ -20,7 +20,8 @@ defmodule PlugCheckup.Check.Runner do
   end
 
   def execute_all(checks, timeout) do
-    Task.async_stream(checks, &Check.execute/1, timeout: timeout, on_timeout: :kill_task)
+    async_options = [timeout: timeout, on_timeout: :kill_task]
+    Task.async_stream(checks, &Check.execute/1, async_options)
   end
 
   def task_to_result({{:ok, result}, _check}) do

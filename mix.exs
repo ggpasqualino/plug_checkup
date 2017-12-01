@@ -24,9 +24,11 @@ defmodule PlugCheckup.Mixfile do
   end
 
   def package do
-    files: ["lib", "mix.exs", "README.md"],
-    maintainers: ["Guilherme Pasqualino"],
-    links: %{"GitHub" => "https://github.com/ggpasqualino/plug_checkup"}
+    [
+      files: ["lib", "mix.exs", "README.md"],
+      maintainers: ["Guilherme Pasqualino"],
+      links: %{"GitHub" => "https://github.com/ggpasqualino/plug_checkup"}
+    ]
   end
 
   defp deps do

@@ -3,25 +3,6 @@ defmodule PlugCheckup.CheckTest do
 
   alias PlugCheckup.Check
 
-  defmodule MyChecks do
-    def raise_exception do
-      raise RuntimeError, message: "Exception"
-    end
-
-    def execute_succesfuly do
-      :ok
-    end
-
-    def execute_with_error do
-      {:error, "Error"}
-    end
-
-    def execute_long_time do
-      1 |> :timer.seconds() |> :timer.sleep()
-      :ok
-    end
-  end
-
   describe "safe_execute/1" do
     test "it converts exceptions to errors" do
       check = %Check{module: MyChecks, function: :raise_exception}
@@ -34,7 +15,7 @@ defmodule PlugCheckup.CheckTest do
     end
 
     test "it doesn't change succes results" do
-      check = %Check{module: MyChecks, function: :execute_succesfuly}
+      check = %Check{module: MyChecks, function: :execute_successfuly}
       assert Check.safe_execute(check) == :ok
     end
   end

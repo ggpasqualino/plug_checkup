@@ -17,25 +17,6 @@ defmodule PlugCheckup.Check.RunnerTest do
     end
   end
 
-  defmodule MyChecks do
-    def raise_exception do
-      raise RuntimeError, message: "Exception"
-    end
-
-    def execute_successfuly do
-      :ok
-    end
-
-    def execute_with_error do
-      {:error, "Error"}
-    end
-
-    def execute_long_time do
-      1 |> :timer.seconds() |> :timer.sleep()
-      :ok
-    end
-  end
-
   describe "execute_all/2" do
     test "it executes all checks within the timeout" do
       checks = [

@@ -32,7 +32,7 @@ defmodule PlugCheckup.CheckTest do
     test "executes check safely and update result" do
       check = %Check{module: MyChecks, function: :raise_exception}
       %Check{result: result} = Check.execute(check)
-      assert {:error, "Exception"} = result
+      assert {:error, "Exception"} == result
     end
 
     test "updates execution time" do

@@ -1,6 +1,6 @@
 defmodule PlugCheckup do
   @moduledoc """
-  Documentation for PlugCheckup.
+  PlugCheckup provides a Plug for adding simple health checks to your app.
   """
 
   alias PlugCheckup.Check.Formatter
@@ -21,7 +21,7 @@ defmodule PlugCheckup do
     |> send_response(results)
   end
 
-  def send_response(conn, {success, results}) do
+  defp send_response(conn, {success, results}) do
     status =
       case success do
         :ok -> 200

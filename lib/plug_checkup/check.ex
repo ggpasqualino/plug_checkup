@@ -24,7 +24,7 @@ defmodule PlugCheckup.Check do
     {time, result}
   end
 
-  @spec safe_execute((... -> PlugCheckup.Check.t)) :: atom()
+  @spec safe_execute(PlugCheckup.Check.t) :: atom()
   def safe_execute(check) do
     apply(check.module, check.function, [])
   rescue

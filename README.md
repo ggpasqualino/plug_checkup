@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ggpasqualino/plug_checkup.svg?branch=master)](https://travis-ci.org/ggpasqualino/plug_checkup)
+[![Build Status](https://travis-ci.org/ggpasqualino/plug_checkup.svg?branch=master)](https://travis-ci.org/ggpasqualino/plug_checkup)[![Coverage Status](https://coveralls.io/repos/github/ggpasqualino/plug_checkup/badge.svg?branch=master)](https://coveralls.io/github/ggpasqualino/plug_checkup?branch=master)
 
 # PlugCheckup
 

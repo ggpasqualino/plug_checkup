@@ -9,4 +9,4 @@ before_script:
 script:
   - mix compile --warnings-as-errors
   - mix credo
-  - mix test
+  - mix coveralls.travis

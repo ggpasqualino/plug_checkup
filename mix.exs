@@ -44,7 +44,7 @@ defmodule PlugCheckup.Mixfile do
       {:plug, "~> 1.4"},
       {:poison, "~> 3.1"},
       {:excoveralls, "~> 0.7.5", only: [:dev, :test]},
-      {:credo, ">= 0.0.0", only: :dev},
+      {:credo, ">= 0.0.0", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:cowboy, "~> 1.0", only: :dev},
     ]

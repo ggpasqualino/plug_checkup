@@ -32,9 +32,12 @@ defmodule PlugCheckup.Check.Formatter do
   ```
   """
 
+  @spec format([PlugCheckup.Check.t]) :: [map()]
   def format(checks) when is_list(checks) do
     Enum.map(checks, &format/1)
   end
+
+  @spec format(PlugCheckup.Check.t) :: map()
   def format(check) do
       %{
         "name" => check.name,

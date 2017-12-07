@@ -11,6 +11,8 @@ defmodule PlugCheckup.Mixfile do
       description: description(),
       package: package(),
       deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
       name: "PlugCheckup",
       source_url: "https://github.com/ggpasqualino/plug_checkup"
     ]
@@ -41,7 +43,8 @@ defmodule PlugCheckup.Mixfile do
     [
       {:plug, "~> 1.4"},
       {:poison, "~> 3.1"},
-      {:credo, ">= 0.0.0", only: :dev},
+      {:excoveralls, "~> 0.7.5", only: [:dev, :test]},
+      {:credo, ">= 0.0.0", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:cowboy, "~> 1.0", only: :dev},
     ]

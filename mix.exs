@@ -41,7 +41,7 @@ defmodule PlugCheckup.Mixfile do
 
   defp deps do
     [
-      {:plug, "~> 1.4"},
+      {:plug, "~> 1.4", allow_pre: true},
       {:poison, "~> 3.1"},
       {:excoveralls, "~> 0.7.5", only: [:dev, :test]},
       {:credo, ">= 0.0.0", only: [:dev, :test]},

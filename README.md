@@ -27,11 +27,16 @@ defmodule MyHealthChecks do
 end
 ```
 
-- Forward your health path to PlugCheckup in your router
+- Forward your health path to PlugCheckup in your Plug Router
 ```elixir
+checks =
+  [
+    %PlugCheckup.Check{name: "DB", module: MyHealthChecks, function: :check_db},
+    %PlugCheckup.Check{name: "Redis", module: MyHealthChecks, function: :check_redis}
+  ]
 forward "/health",
   to: PlugCheckup,
-  init_opts: %PlugCheckup.Options{checks: [{MyHealthChecks, :check_db}, {MyHealthChecks, :check_redis}]}
+  init_opts: %PlugCheckup.Options{checks: checks}
 ```
 
 ## The Checks

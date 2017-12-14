@@ -4,7 +4,14 @@ defmodule PlugCheckup.Check do
   Executes a check updating its result and execution time. Also, it transforms any exception into a tuple {:error, reason}
   """
 
-  @type t :: %PlugCheckup.Check{name: String.t, module: module,function: atom(), result: atom(), time: pos_integer()}
+  @type t :: %PlugCheckup.Check{
+    name: String.t(),
+    module: module(),
+    function: atom(),
+    result: atom(),
+    time: pos_integer()
+  }
+
   defstruct [:name, :module, :function, :result, :time]
 
   @spec execute(PlugCheckup.Check.t) :: PlugCheckup.Check.t

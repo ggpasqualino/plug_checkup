@@ -4,13 +4,16 @@ defmodule PlugCheckup.Check do
   Executes a check updating its result and execution time. Also, it transforms any exception into a tuple {:error, reason}
   """
 
+  @type t :: %PlugCheckup.Check{name: String.t, module: module,function: atom(), result: atom(), time: pos_integer()}
   defstruct [:name, :module, :function, :result, :time]
 
+  @spec execute(PlugCheckup.Check.t) :: PlugCheckup.Check.t
   def execute(check) do
     {time, result} = with_time(&safe_execute/1, [check])
     %{check | result: result, time: time}
   end
 
+  @spec with_time((... -> any), [any]) :: tuple()
   def with_time(fun, args) do
     time_before = System.monotonic_time
     result = apply(fun, args)
@@ -21,6 +24,7 @@ defmodule PlugCheckup.Check do
     {time, result}
   end
 
+  @spec safe_execute(PlugCheckup.Check.t) :: atom()
   def safe_execute(check) do
     apply(check.module, check.function, [])
   rescue

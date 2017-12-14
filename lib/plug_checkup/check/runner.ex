@@ -5,7 +5,7 @@ defmodule PlugCheckup.Check.Runner do
   """
   alias PlugCheckup.Check
 
-  @spec async_run([tuple()], pos_integer()) :: tuple()
+  @spec async_run([PlugCheckup.Check.t], pos_integer()) :: tuple()
   def async_run(checks, timeout) do
     results =
       checks

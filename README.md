@@ -25,6 +25,7 @@ defmodule MyHealthChecks do
   def check_db do
     :ok
   end
+
   def check_redis do
     :ok
   end
@@ -33,14 +34,28 @@ end
 
 - Forward your health path to PlugCheckup in your Plug Router
 ```elixir
-checks =
-  [
-    %PlugCheckup.Check{name: "DB", module: MyHealthChecks, function: :check_db},
-    %PlugCheckup.Check{name: "Redis", module: MyHealthChecks, function: :check_redis}
-  ]
-forward "/health",
+checks = [
+  %PlugCheckup.Check{name: "DB", module: MyHealthChecks, function: :check_db},
+  %PlugCheckup.Check{name: "Redis", module: MyHealthChecks, function: :check_redis}
+]
+
+forward(
+  "/health",
   to: PlugCheckup,
   init_opts: %PlugCheckup.Options{checks: checks}
+)
+```
+
+If you're working with Phoenix, you need to change the syntax slightly to
+accomodate `Phoenix.Router.forward/4`:
+
+```elixir
+checks = [
+  %PlugCheckup.Check{name: "DB", module: MyHealthChecks, function: :check_db},
+  %PlugCheckup.Check{name: "Redis", module: MyHealthChecks, function: :check_redis}
+]
+
+forward("/health", PlugCheckup, %PlugCheckup.Options{checks: checks})
 ```
 
 ## The Checks

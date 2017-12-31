@@ -12,4 +12,9 @@ defmodule PlugCheckup.OptionsTest do
     options = %Options{}
     assert options.checks == []
   end
+
+  test "it has default pretty" do
+    options = %Options{}
+    assert options.pretty
+  end
 end

@@ -18,17 +18,21 @@ defmodule PlugCheckup do
 
     conn
     |> put_resp_content_type("application/json")
-    |> send_response(results)
+    |> send_response(results, opts)
   end
 
-  defp send_response(conn, {success, results}) do
+  defp send_response(conn, {success, results}, opts) do
     status =
       case success do
         :ok -> 200
         :error -> 500
       end
 
-    response = results |> Formatter.format() |> Poison.encode!
+    response =
+      results
+      |> Formatter.format()
+      |> Poison.encode!(pretty: opts.pretty)
+
     send_resp(conn, status, response)
   end
 end

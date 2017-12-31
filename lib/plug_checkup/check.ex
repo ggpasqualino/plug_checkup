@@ -35,6 +35,6 @@ defmodule PlugCheckup.Check do
   def safe_execute(check) do
     apply(check.module, check.function, [])
   rescue
-    e -> {:error, e.message}
+    e -> {:error, Exception.message(e)}
   end
 end

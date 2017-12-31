@@ -9,6 +9,11 @@ defmodule PlugCheckup.CheckTest do
       assert Check.safe_execute(check) == {:error, "Exception"}
     end
 
+    test "it converts exceptions without message field to errors" do
+      check = %Check{module: MyChecks, function: :non_existent_function}
+      assert Check.safe_execute(check) == {:error, "function MyChecks.non_existent_function/0 is undefined or private"}
+    end
+
     test "it doesn't change error results" do
       check = %Check{module: MyChecks, function: :execute_with_error}
       assert Check.safe_execute(check) == {:error, "Error"}

@@ -32,7 +32,7 @@ defmodule PlugCheckup.Mixfile do
 
   def package do
     [
-      files: ["lib", "mix.exs", "README.md"],
+      files: ["lib", "priv", "mix.exs", "README.md"],
       maintainers: ["Guilherme Pasqualino"],
       licenses: [],
       links: %{"GitHub" => "https://github.com/ggpasqualino/plug_checkup"}

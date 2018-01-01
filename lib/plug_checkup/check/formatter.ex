@@ -1,34 +1,10 @@
 defmodule PlugCheckup.Check.Formatter do
+  @external_resource "priv/schemas/health_check_response.json"
+  @schema File.read!("priv/schemas/health_check_response.json")
   @moduledoc """
   Format the given checks into a list of maps which respects the following JSON schema
   ```json
-  {
-    "$schema": "http://json-schema.org/draft-06/schema#",
-    "title": "Health check list",
-    "type": "array",
-    "items": {
-      "title": "Check",
-      "type": "object",
-      "properties": {
-        "name": {
-          "description": "The name of this check, for example: 'redis', or 'postgres'",
-          "type": "string"
-        },
-        "healthy": {
-          "description": "If the check was successful or not",
-          "type" : "boolean"
-        },
-        "time": {
-          "description": "How long the check took to run",
-          "type": "integer"
-        },
-        "error": {
-          "description": "The error reason in case the check fails",
-          "type": "string"
-        }
-      }
-    }
-  }
+  #{@schema}
   ```
   """
 

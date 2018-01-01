@@ -47,6 +47,7 @@ defmodule PlugCheckup.Mixfile do
       {:credo, ">= 0.0.0", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:cowboy, "~> 1.0", only: :dev},
+      {:ex_json_schema, "~> 0.5.5", only: :test},
     ]
   end
 end

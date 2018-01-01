@@ -14,7 +14,7 @@ PlugCheckup provides a Plug for adding simple health checks to your app. The [JS
 ```elixir
 defp deps do
   [
-    {:plug_checkup, "~> 0.2.0"}
+    {:plug_checkup, "~> 0.3.0"}
   ]
 end
 ```

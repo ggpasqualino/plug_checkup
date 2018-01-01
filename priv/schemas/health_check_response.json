@@ -16,11 +16,11 @@
       },
       "time": {
         "description": "How long the check took to run in micros",
-        "type": "integer"
+        "type": ["integer", "null"]
       },
       "error": {
         "description": "The error reason in case the check fails",
-        "type": "string"
+        "type": ["string", "null"]
       }
     }
   }

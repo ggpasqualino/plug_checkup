@@ -23,13 +23,19 @@ defmodule MyRouter do
     %Check{name: "random1", module: Health.RandomCheck, function: :call},
     %Check{name: "random2", module: Health.RandomCheck, function: :call},
   ]
-  deps_checks = [
-    %Check{name: "random1", module: Health.RandomCheck, function: :call},
-    %Check{name: "random2", module: Health.RandomCheck, function: :call},
-  ]
+  forward(
+    "/selfhealth",
+    to: PlugCheckup,
+    init_opts: Options.new(checks: self_checks, timeout: 1000))
 
-  forward "/selfhealth", to: PlugCheckup, init_opts: %Options{checks: self_checks, timeout: 1000}
-  forward "/dependencyhealth", to: PlugCheckup, init_opts: %Options{checks: deps_checks, timeout: 1000}
+    deps_checks = [
+      %Check{name: "random1", module: Health.RandomCheck, function: :call},
+      %Check{name: "random2", module: Health.RandomCheck, function: :call},
+    ]
+    forward(
+    "/dependencyhealth",
+    to: PlugCheckup,
+    init_opts: Options.new(checks: deps_checks, timeout: 3000, pretty: false))
 
   match _ do
     send_resp(conn, 404, "oops")

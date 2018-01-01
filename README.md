@@ -42,7 +42,7 @@ checks = [
 forward(
   "/health",
   to: PlugCheckup,
-  init_opts: %PlugCheckup.Options{checks: checks}
+  init_opts: PlugCheckup.Options.new(checks: checks)
 )
 ```
 
@@ -55,7 +55,7 @@ checks = [
   %PlugCheckup.Check{name: "Redis", module: MyHealthChecks, function: :check_redis}
 ]
 
-forward("/health", PlugCheckup, %PlugCheckup.Options{checks: checks})
+forward("/health", PlugCheckup, PlugCheckup.Options.new(checks: checks))
 ```
 
 ## The Checks

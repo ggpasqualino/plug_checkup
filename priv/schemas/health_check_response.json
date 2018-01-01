@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Health check response",
+  "type": "array",
+  "items": {
+    "title": "Check",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "The name of this check, for example: 'redis', or 'postgres'",
+        "type": "string"
+      },
+      "healthy": {
+        "description": "If the check was successful or not",
+        "type" : "boolean"
+      },
+      "time": {
+        "description": "How long the check took to run in micros",
+        "type": ["integer", "null"]
+      },
+      "error": {
+        "description": "The error reason in case the check fails",
+        "type": ["string", "null"]
+      }
+    }
+  }
+}

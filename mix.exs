@@ -32,7 +32,7 @@ defmodule PlugCheckup.Mixfile do
 
   def package do
     [
-      files: ["lib", "mix.exs", "README.md"],
+      files: ["lib", "priv", "mix.exs", "README.md"],
       maintainers: ["Guilherme Pasqualino"],
       licenses: [],
       links: %{"GitHub" => "https://github.com/ggpasqualino/plug_checkup"}
@@ -47,6 +47,7 @@ defmodule PlugCheckup.Mixfile do
       {:credo, ">= 0.0.0", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:cowboy, "~> 1.0", only: :dev},
+      {:ex_json_schema, "~> 0.5.5", only: :test},
     ]
   end
 end

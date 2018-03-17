@@ -4,7 +4,7 @@ defmodule PlugCheckup.Check.FormatterTest do
   alias PlugCheckup.Check
   alias PlugCheckup.Check.Formatter
 
-  describe "format/1" do
+  describe "format/2" do
     test "it formats successful check" do
       check =
         %Check{
@@ -63,6 +63,26 @@ defmodule PlugCheckup.Check.FormatterTest do
           "healthy" => true,
           "error" => nil
         }]
+    end
+
+    test "it formats the time" do
+      check =
+        %Check{
+          name: "check 1",
+          module: Fake,
+          function: :call,
+          result: :ok,
+          time: 1234
+        }
+
+      formatted = Formatter.format(check, time_unit: :millisecond)
+      assert formatted ==
+        %{
+          "name" => "check 1",
+          "time" => 1,
+          "healthy" => true,
+          "error" => nil
+        }
     end
   end
 end

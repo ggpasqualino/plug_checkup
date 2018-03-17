@@ -8,16 +8,17 @@ defmodule PlugCheckup.Check.Formatter do
   ```
   """
 
-  @spec format([PlugCheckup.Check.t]) :: [map()]
-  def format(checks) when is_list(checks) do
-    Enum.map(checks, &format/1)
+  @spec format([PlugCheckup.Check.t], keyword()) :: [map()]
+  def format(checks, opts \\ [])
+  def format(checks, opts) when is_list(checks) do
+    Enum.map(checks, &format(&1, opts))
   end
 
-  @spec format(PlugCheckup.Check.t) :: map()
-  def format(check) do
+  @spec format(PlugCheckup.Check.t, keyword()) :: map()
+  def format(check, opts) do
       %{
         "name" => check.name,
-        "time" => check.time,
+        "time" => time(check, opts),
         "healthy" => check.result == :ok,
         "error" =>
           case check.result do
@@ -25,5 +26,14 @@ defmodule PlugCheckup.Check.Formatter do
             {:error, reason} -> reason
           end
       }
+  end
+
+  defp time(check, opts) do
+    time_unit = opts[:time_unit]
+    if time_unit not in ~w(nil microsecond)a do
+      System.convert_time_unit(check.time, :microsecond, time_unit)
+    else
+      check.time
+    end
   end
 end

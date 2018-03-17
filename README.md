@@ -64,3 +64,14 @@ A check is a function with arity zero, which should return either :ok or {:error
 ## Response
 
 PlugCheckup should return either 200 or 500 statuses, Content-Type header "application/json", and the body should respect [this](priv/schemas/health_check_response.json) JSON schema
+
+## Demo
+
+Check [.iex.exs](.iex.exs) for a demo of plug_checkup in a Plug.Router. The demo can be run as following.
+```sh
+git clone https://github.com/ggpasqualino/plug_checkup
+cd plug_checkup
+mix deps.get
+iex -S mix
+```
+Open your browse either on http://localhost:4000/selfhealth or http://localhost:4000/dependencyhealth

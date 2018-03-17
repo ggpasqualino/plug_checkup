@@ -6,13 +6,18 @@ defmodule PlugCheckup.Mixfile do
       app: :plug_checkup,
       version: "0.3.0",
       elixir: "~> 1.5",
-      elixirc_paths: elixirc_paths(Mix.env),
-      start_permanent: Mix.env == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
+      start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
       name: "PlugCheckup",
       source_url: "https://github.com/ggpasqualino/plug_checkup"
     ]
@@ -23,8 +28,8 @@ defmodule PlugCheckup.Mixfile do
   end
 
   defp elixirc_paths(:test), do: elixirc_paths() ++ ["test/support"]
-  defp elixirc_paths(_),     do: elixirc_paths()
-  defp elixirc_paths(),      do: ["lib"]
+  defp elixirc_paths(_), do: elixirc_paths()
+  defp elixirc_paths(), do: ["lib"]
 
   def description do
     "PlugCheckup provides a Plug for adding simple health checks to your app."
@@ -47,7 +52,7 @@ defmodule PlugCheckup.Mixfile do
       {:credo, ">= 0.0.0", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:cowboy, "~> 1.0", only: :dev},
-      {:ex_json_schema, "~> 0.5.5", only: :test},
+      {:ex_json_schema, "~> 0.5.5", only: :test}
     ]
   end
 end

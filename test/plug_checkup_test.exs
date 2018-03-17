@@ -52,12 +52,14 @@ defmodule PlugCheckupTest do
       response = execute_plug(:healthy)
       formatted_response = Parser.parse!(response.resp_body)
 
-      assert [%{
-        "name" => "1",
-        "time" => time,
-        "healthy" => true,
-        "error" => nil
-      }] = formatted_response
+      assert [
+               %{
+                 "name" => "1",
+                 "time" => time,
+                 "healthy" => true,
+                 "error" => nil
+               }
+             ] = formatted_response
 
       assert is_integer(time)
     end
@@ -66,12 +68,14 @@ defmodule PlugCheckupTest do
       response = execute_plug(:not_healthy)
       formatted_response = Parser.parse!(response.resp_body)
 
-      assert [%{
-        "name" => "1",
-        "time" => time,
-        "healthy" => false,
-        "error" => "Error"
-      }] = formatted_response
+      assert [
+               %{
+                 "name" => "1",
+                 "time" => time,
+                 "healthy" => false,
+                 "error" => "Error"
+               }
+             ] = formatted_response
 
       assert is_integer(time)
     end

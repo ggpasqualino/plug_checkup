@@ -4,10 +4,11 @@ defmodule IntegrationTest do
 
   defmodule Health.RandomCheck do
     def call do
-      probability = :rand.uniform
+      probability = :rand.uniform()
+
       cond do
         probability < 0.5 -> :ok
-        probability < 0.7  -> {:error, "Error"}
+        probability < 0.7 -> {:error, "Error"}
         probability < 0.9 -> raise(RuntimeError, message: "Exception")
         true -> :timer.sleep(2000)
       end
@@ -20,16 +21,18 @@ defmodule IntegrationTest do
     alias Health.RandomCheck
     alias PlugCheckup, as: PC
 
-    plug :match
-    plug :dispatch
+    plug(:match)
+    plug(:dispatch)
 
     checks = [
       %PC.Check{name: "random1", module: RandomCheck, function: :call}
     ]
+
     forward(
       "/health",
       to: PC,
-      init_opts: PC.Options.new(checks: checks, timeout: 1000))
+      init_opts: PC.Options.new(checks: checks, timeout: 1000)
+    )
 
     match _ do
       send_resp(conn, 404, "oops")

@@ -27,11 +27,29 @@ defmodule PlugCheckup.Check.RunnerTest do
       ]
 
       assert [
-        ok: %Check{name: "1", module: MyChecks, function: :raise_exception, result: {:error, "Exception"}, time: _},
-        ok: %Check{name: "2", module: MyChecks, function: :execute_successfuly, result: :ok, time: _},
-        ok: %Check{name: "3", module: MyChecks, function: :execute_with_error, result: {:error, "Error"}, time: _},
-        exit: :timeout
-      ] = checks |> Runner.execute_all(500) |> Enum.to_list
+               ok: %Check{
+                 name: "1",
+                 module: MyChecks,
+                 function: :raise_exception,
+                 result: {:error, "Exception"},
+                 time: _
+               },
+               ok: %Check{
+                 name: "2",
+                 module: MyChecks,
+                 function: :execute_successfuly,
+                 result: :ok,
+                 time: _
+               },
+               ok: %Check{
+                 name: "3",
+                 module: MyChecks,
+                 function: :execute_with_error,
+                 result: {:error, "Error"},
+                 time: _
+               },
+               exit: :timeout
+             ] = checks |> Runner.execute_all(500) |> Enum.to_list()
     end
   end
 
@@ -43,11 +61,22 @@ defmodule PlugCheckup.Check.RunnerTest do
       ]
 
       assert {:ok,
-        [
-          %Check{name: "1", module: MyChecks, function: :execute_successfuly, result: :ok, time: _},
-          %Check{name: "2", module: MyChecks, function: :execute_successfuly, result: :ok, time: _}
-        ]
-      } = Runner.async_run(checks, 500)
+              [
+                %Check{
+                  name: "1",
+                  module: MyChecks,
+                  function: :execute_successfuly,
+                  result: :ok,
+                  time: _
+                },
+                %Check{
+                  name: "2",
+                  module: MyChecks,
+                  function: :execute_successfuly,
+                  result: :ok,
+                  time: _
+                }
+              ]} = Runner.async_run(checks, 500)
     end
 
     test "it executes all checks and returns error when any check is unsuccessful" do
@@ -57,11 +86,22 @@ defmodule PlugCheckup.Check.RunnerTest do
       ]
 
       assert {:error,
-        [
-          %Check{name: "1", module: MyChecks, function: :execute_with_error, result: {:error, "Error"}, time: _},
-          %Check{name: "2", module: MyChecks, function: :execute_successfuly, result: :ok, time: _}
-        ]
-      } = Runner.async_run(checks, 500)
+              [
+                %Check{
+                  name: "1",
+                  module: MyChecks,
+                  function: :execute_with_error,
+                  result: {:error, "Error"},
+                  time: _
+                },
+                %Check{
+                  name: "2",
+                  module: MyChecks,
+                  function: :execute_successfuly,
+                  result: :ok,
+                  time: _
+                }
+              ]} = Runner.async_run(checks, 500)
     end
   end
 end

@@ -2,19 +2,17 @@ defmodule PlugCheckup.Options do
   @moduledoc """
   Defines the options which can be given to initialize PlugCheckup.
   """
-  defstruct [
-    timeout: :timer.seconds(1),
-    checks: [],
-    pretty: true,
-    time_unit: :microsecond
-  ]
+  defstruct timeout: :timer.seconds(1),
+            checks: [],
+            pretty: true,
+            time_unit: :microsecond
 
-  @type t ::  %__MODULE__{
-    timeout: pos_integer(),
-    checks: list(PlugCheckup.Check.t()),
-    pretty: boolean(),
-    time_unit: :second | :millisecond | :microsecond
-  }
+  @type t :: %__MODULE__{
+          timeout: pos_integer(),
+          checks: list(PlugCheckup.Check.t()),
+          pretty: boolean(),
+          time_unit: :second | :millisecond | :microsecond
+        }
 
   @spec new(keyword()) :: __MODULE__.t()
   def new(opts \\ []) do
@@ -25,7 +23,7 @@ defmodule PlugCheckup.Options do
   defp fields_to_change(opts) do
     opts
     |> Keyword.take([:timeout, :checks, :pretty, :time_unit])
-    |> Enum.into(Map.new)
+    |> Enum.into(Map.new())
     |> validate!()
   end
 
@@ -53,6 +51,7 @@ defmodule PlugCheckup.Options do
 
   defp validate_checks!(checks) do
     not_a_check? = &(!match?(%{__struct__: PlugCheckup.Check}, &1))
+
     if Enum.any?(checks, not_a_check?) do
       raise ArgumentError, message: "checks should be a list of PlugCheckup.Check"
     end
@@ -66,6 +65,7 @@ defmodule PlugCheckup.Options do
 
   defp validate_time_unit!(time_unit) do
     possible_values = ~w(second millisecond microsecond)a
+
     if time_unit not in possible_values do
       raise ArgumentError, message: "time_unit should be one of #{inspect(possible_values)}"
     end

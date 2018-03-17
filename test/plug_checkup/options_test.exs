@@ -85,9 +85,13 @@ defmodule PlugCheckup.OptionsTest do
     end
 
     test "it raises exception when time_unit is not a valid value" do
-      assert_raise(ArgumentError, "time_unit should be one of [:second, :millisecond, :microsecond]", fn ->
-        Options.new(time_unit: :foo)
-      end)
+      assert_raise(
+        ArgumentError,
+        "time_unit should be one of [:second, :millisecond, :microsecond]",
+        fn ->
+          Options.new(time_unit: :foo)
+        end
+      )
     end
   end
 end

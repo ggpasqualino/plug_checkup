@@ -11,6 +11,14 @@ defmodule MyChecks do
     {:error, "Error"}
   end
 
+  def exit do
+    exit(:boom)
+  end
+
+  def throw do
+    throw(:ball)
+  end
+
   def raise_exception do
     raise RuntimeError, message: "Exception"
   end

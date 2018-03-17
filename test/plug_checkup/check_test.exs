@@ -14,6 +14,16 @@ defmodule PlugCheckup.CheckTest do
       assert Check.safe_execute(check) == {:error, "function MyChecks.non_existent_function/0 is undefined or private"}
     end
 
+    test "it converts exit values" do
+      check = %Check{module: MyChecks, function: :exit}
+      assert Check.safe_execute(check) == {:error, "Caught exit with value: :boom"}
+    end
+
+    test "it converts thrown values" do
+      check = %Check{module: MyChecks, function: :throw}
+      assert Check.safe_execute(check) == {:error, "Caught throw with value: :ball"}
+    end
+
     test "it doesn't change error results" do
       check = %Check{module: MyChecks, function: :execute_with_error}
       assert Check.safe_execute(check) == {:error, "Error"}

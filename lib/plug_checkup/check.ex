@@ -25,5 +25,7 @@ defmodule PlugCheckup.Check do
     apply(check.module, check.function, [])
   rescue
     e -> {:error, Exception.message(e)}
+  catch
+    what, value -> {:error, "Caught #{what} with value: #{inspect(value)}"}
   end
 end

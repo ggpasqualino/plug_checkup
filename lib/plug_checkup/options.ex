@@ -2,12 +2,18 @@ defmodule PlugCheckup.Options do
   @moduledoc """
   Defines the options which can be given to initialize PlugCheckup.
   """
-  defstruct timeout: :timer.seconds(1), checks: [], pretty: true
+  defstruct [
+    timeout: :timer.seconds(1),
+    checks: [],
+    pretty: true,
+    time_unit: :microsecond
+  ]
 
   @type t ::  %__MODULE__{
     timeout: pos_integer(),
     checks: list(PlugCheckup.Check.t()),
-    pretty: boolean()
+    pretty: boolean(),
+    time_unit: :second | :millisecond | :microsecond
   }
 
   @spec new(keyword()) :: __MODULE__.t()
@@ -18,7 +24,7 @@ defmodule PlugCheckup.Options do
 
   defp fields_to_change(opts) do
     opts
-    |> Keyword.take([:timeout, :checks, :pretty])
+    |> Keyword.take([:timeout, :checks, :pretty, :time_unit])
     |> Enum.into(Map.new)
     |> validate!()
   end
@@ -27,6 +33,7 @@ defmodule PlugCheckup.Options do
     validate_change(fields, :timeout, &validate_timeout!/1)
     validate_change(fields, :checks, &validate_checks!/1)
     validate_change(fields, :pretty, &validate_pretty!/1)
+    validate_change(fields, :time_unit, &validate_time_unit!/1)
 
     fields
   end
@@ -54,6 +61,13 @@ defmodule PlugCheckup.Options do
   defp validate_pretty!(pretty) do
     if pretty not in [true, false] do
       raise ArgumentError, message: "pretty should be a boolean"
+    end
+  end
+
+  defp validate_time_unit!(time_unit) do
+    possible_values = ~w(second millisecond microsecond)a
+    if time_unit not in possible_values do
+      raise ArgumentError, message: "time_unit should be one of #{inspect(possible_values)}"
     end
   end
 end

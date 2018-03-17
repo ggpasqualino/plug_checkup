@@ -18,6 +18,11 @@ defmodule PlugCheckup.OptionsTest do
       options = Options.new()
       assert options.pretty == true
     end
+
+    test "it has default time_uit" do
+      options = Options.new()
+      assert options.time_unit == :microsecond
+    end
   end
 
   describe "setting timeout" do
@@ -69,6 +74,19 @@ defmodule PlugCheckup.OptionsTest do
     test "it raises exception when pretty is not a boolean" do
       assert_raise(ArgumentError, "pretty should be a boolean", fn ->
         Options.new(pretty: :not_a_boolean)
+      end)
+    end
+  end
+
+  describe "setting time_unit" do
+    test "time_unit is a valid value" do
+      options = Options.new(time_unit: :second)
+      assert options.time_unit == :second
+    end
+
+    test "it raises exception when time_unit is not a valid value" do
+      assert_raise(ArgumentError, "time_unit should be one of [:second, :millisecond, :microsecond]", fn ->
+        Options.new(time_unit: :foo)
       end)
     end
   end

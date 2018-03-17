@@ -25,14 +25,6 @@ defmodule PlugCheckup.CheckTest do
     end
   end
 
-  describe "with_time/2" do
-    test "it calculates the exection time" do
-      {time, result} = Check.with_time(&MyChecks.execute_long_time/0, [])
-      assert time >= 1_000_000 #microseconds
-      assert result == :ok
-    end
-  end
-
   describe "execute/1" do
     test "executes check safely and update result" do
       check = %Check{module: MyChecks, function: :raise_exception}

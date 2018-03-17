@@ -16,19 +16,8 @@ defmodule PlugCheckup.Check do
 
   @spec execute(PlugCheckup.Check.t) :: PlugCheckup.Check.t
   def execute(check) do
-    {time, result} = with_time(&safe_execute/1, [check])
+    {time, result} = :timer.tc(&safe_execute/1, [check])
     %{check | result: result, time: time}
-  end
-
-  @spec with_time((... -> any), [any]) :: tuple()
-  def with_time(fun, args) do
-    time_before = System.monotonic_time
-    result = apply(fun, args)
-    time_after = System.monotonic_time
-    time = time_after - time_before
-    time = System.convert_time_unit(time, :native, :microsecond)
-
-    {time, result}
   end
 
   @spec safe_execute(PlugCheckup.Check.t) :: :ok | {:error, any}

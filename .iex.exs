@@ -6,8 +6,10 @@ defmodule Health.RandomCheck do
     probability = :rand.uniform
     cond do
       probability < 0.5 -> :ok
-      probability < 0.7  -> {:error, "Error"}
-      probability < 0.9 -> raise(RuntimeError, message: "Exception")
+      probability < 0.6  -> {:error, "Error"}
+      probability < 0.7 -> raise(RuntimeError, message: "Exception")
+      probability < 0.8 -> exit(:boom)
+      probability < 0.9 -> throw(:ball)
       true -> :timer.sleep(2000)
     end
   end
@@ -35,7 +37,12 @@ defmodule MyRouter do
     forward(
     "/dependencyhealth",
     to: PlugCheckup,
-    init_opts: Options.new(checks: deps_checks, timeout: 3000, pretty: false))
+    init_opts: Options.new(
+      checks: deps_checks,
+      timeout: 3000,
+      pretty: false,
+      time_unit: :millisecond)
+    )
 
   match _ do
     send_resp(conn, 404, "oops")

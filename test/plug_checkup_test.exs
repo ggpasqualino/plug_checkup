@@ -4,7 +4,6 @@ defmodule PlugCheckupTest do
 
   alias PlugCheckup.Check
   alias PlugCheckup.Options
-  alias Poison.Parser
 
   def execute_plug(:healthy) do
     check = %Check{name: "1", module: MyChecks, function: :execute_successfuly}
@@ -50,7 +49,7 @@ defmodule PlugCheckupTest do
   describe "body" do
     test "it is a valid json when healthy" do
       response = execute_plug(:healthy)
-      formatted_response = Parser.parse!(response.resp_body)
+      formatted_response = Jason.decode!(response.resp_body)
 
       assert [
                %{
@@ -66,7 +65,7 @@ defmodule PlugCheckupTest do
 
     test "it is a valid json when not healthy" do
       response = execute_plug(:not_healthy)
-      formatted_response = Parser.parse!(response.resp_body)
+      formatted_response = Jason.decode!(response.resp_body)
 
       assert [
                %{

@@ -55,9 +55,9 @@ defmodule IntegrationTest do
   end
 
   @external_resource "priv/schemas/health_check_response.json"
-  @schema "priv/schemas/health_check_response.json" |> File.read!() |> Poison.decode!()
+  @schema "priv/schemas/health_check_response.json" |> File.read!() |> Jason.decode!()
   def assert_body_is_valid(conn) do
-    json_response = Poison.decode!(conn.resp_body)
+    json_response = Jason.decode!(conn.resp_body)
     assert ExJsonSchema.Validator.validate(@schema, json_response) == :ok
   end
 end

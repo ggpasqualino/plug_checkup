@@ -32,10 +32,10 @@ defmodule PlugCheckup.Check.Formatter do
   defp time(check, opts) do
     time_unit = opts[:time_unit]
 
-    if time_unit not in ~w(nil microsecond)a do
-      System.convert_time_unit(check.time, :microsecond, time_unit)
-    else
+    if time_unit in ~w(nil microsecond)a do
       check.time
+    else
+      System.convert_time_unit(check.time, :microsecond, time_unit)
     end
   end
 end

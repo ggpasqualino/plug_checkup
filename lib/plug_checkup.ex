@@ -31,7 +31,7 @@ defmodule PlugCheckup do
     response =
       results
       |> Formatter.format(time_unit: opts.time_unit)
-      |> Poison.encode!(pretty: opts.pretty)
+      |> Jason.encode!(pretty: opts.pretty)
 
     send_resp(conn, status, response)
   end

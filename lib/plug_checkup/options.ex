@@ -28,15 +28,15 @@ defmodule PlugCheckup.Options do
   end
 
   defp validate!(fields) do
-    validate_change(fields, :timeout, &validate_timeout!/1)
-    validate_change(fields, :checks, &validate_checks!/1)
-    validate_change(fields, :pretty, &validate_pretty!/1)
-    validate_change(fields, :time_unit, &validate_time_unit!/1)
+    validate_optional(fields, :timeout, &validate_timeout!/1)
+    validate_optional(fields, :checks, &validate_checks!/1)
+    validate_optional(fields, :pretty, &validate_pretty!/1)
+    validate_optional(fields, :time_unit, &validate_time_unit!/1)
 
     fields
   end
 
-  defp validate_change(fields, key, validator) do
+  defp validate_optional(fields, key, validator) do
     if Map.has_key?(fields, key) do
       value = fields[key]
       validator.(value)

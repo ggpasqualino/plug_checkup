@@ -31,7 +31,7 @@ defmodule IntegrationTest do
     forward(
       "/health",
       to: PC,
-      init_opts: PC.Options.new(checks: checks, timeout: 1000)
+      init_opts: PC.Options.new(json_encoder: Jason, checks: checks, timeout: 1000)
     )
 
     match _ do

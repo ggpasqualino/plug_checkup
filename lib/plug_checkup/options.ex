@@ -2,12 +2,14 @@ defmodule PlugCheckup.Options do
   @moduledoc """
   Defines the options which can be given to initialize PlugCheckup.
   """
-  defstruct timeout: :timer.seconds(1),
+  defstruct json_encoder: nil,
+            timeout: :timer.seconds(1),
             checks: [],
             pretty: true,
             time_unit: :microsecond
 
   @type t :: %__MODULE__{
+          json_encoder: module(),
           timeout: pos_integer(),
           checks: list(PlugCheckup.Check.t()),
           pretty: boolean(),
@@ -22,7 +24,7 @@ defmodule PlugCheckup.Options do
 
   defp fields_to_change(opts) do
     opts
-    |> Keyword.take([:timeout, :checks, :pretty, :time_unit])
+    |> Keyword.take([:json_encoder, :timeout, :checks, :pretty, :time_unit])
     |> Enum.into(Map.new())
     |> validate!()
   end
@@ -32,6 +34,7 @@ defmodule PlugCheckup.Options do
     validate_optional(fields, :checks, &validate_checks!/1)
     validate_optional(fields, :pretty, &validate_pretty!/1)
     validate_optional(fields, :time_unit, &validate_time_unit!/1)
+    validate_required(fields, :json_encoder, &validate_json_encoder!/1)
 
     fields
   end
@@ -40,6 +43,15 @@ defmodule PlugCheckup.Options do
     if Map.has_key?(fields, key) do
       value = fields[key]
       validator.(value)
+    end
+  end
+
+  defp validate_required(fields, key, validator) do
+    if Map.has_key?(fields, key) do
+      value = fields[key]
+      validator.(value)
+    else
+      raise ArgumentError, message: "PlugCheckup expects a #{inspect(key)} configuration"
     end
   end
 
@@ -68,6 +80,20 @@ defmodule PlugCheckup.Options do
 
     if time_unit not in possible_values do
       raise ArgumentError, message: "time_unit should be one of #{inspect(possible_values)}"
+    end
+  end
+
+  defp validate_json_encoder!(encoder) do
+    unless Code.ensure_compiled?(encoder) do
+      raise ArgumentError,
+            "invalid :json_encoder option. The module #{inspect(encoder)} is not " <>
+              "loaded and could not be found"
+    end
+
+    unless function_exported?(encoder, :encode!, 2) do
+      raise ArgumentError,
+            "invalid :json_encoder option. The module #{inspect(encoder)} must " <>
+              "implement encode!/2"
     end
   end
 end

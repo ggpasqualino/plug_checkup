@@ -30,7 +30,7 @@ defmodule MyRouter do
   forward(
     "/selfhealth",
     to: PlugCheckup,
-    init_opts: Options.new(checks: self_checks, timeout: 1000)
+    init_opts: Options.new(json_encoder: Jason, checks: self_checks, timeout: 1000)
   )
 
   deps_checks = [
@@ -43,6 +43,7 @@ defmodule MyRouter do
     to: PlugCheckup,
     init_opts:
       Options.new(
+        json_encoder: Jason,
         checks: deps_checks,
         timeout: 3000,
         pretty: false,

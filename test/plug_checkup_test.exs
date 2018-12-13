@@ -16,7 +16,7 @@ defmodule PlugCheckupTest do
   end
 
   def execute_plug(check = %Check{}) do
-    options = PlugCheckup.init(Options.new(checks: [check]))
+    options = PlugCheckup.init(Options.new(json_encoder: Jason, checks: [check]))
     request = conn(:get, "/")
 
     PlugCheckup.call(request, options)

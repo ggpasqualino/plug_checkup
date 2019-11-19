@@ -6,7 +6,7 @@
 
 # PlugCheckup
 
-PlugCheckup provides a Plug for adding simple health checks to your app. The [JSON output](#response) is similar to the one provided by the [MiniCheck](https://github.com/workshare/mini-check) Ruby library. It was started at [solarisBank](https://www.solarisbank.de/en/) as an easy way of providing monitoring to our Plug based applications.
+PlugCheckup provides a Plug for adding simple health checks to your app. The [JSON output](#response) is similar to the one provided by the [MiniCheck](https://github.com/workshare/mini-check) Ruby library. It was started to provide [solarisBank](https://www.solarisbank.de/en/) an easy way of monitoring Plug based applications.
 
 ## Usage
 

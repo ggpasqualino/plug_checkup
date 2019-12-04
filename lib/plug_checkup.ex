@@ -25,7 +25,7 @@ defmodule PlugCheckup do
     status =
       case success do
         :ok -> 200
-        :error -> 500
+        :error -> opts.error_code
       end
 
     response =

@@ -14,6 +14,11 @@ defmodule PlugCheckup.OptionsTest do
       assert options.checks == []
     end
 
+    test "it has default error_code" do
+      options = new_options()
+      assert options.error_code == 500
+    end
+
     test "it has default pretty" do
       options = new_options()
       assert options.pretty == true
@@ -61,6 +66,31 @@ defmodule PlugCheckup.OptionsTest do
       assert_raise(ArgumentError, "checks should be a list of PlugCheckup.Check", fn ->
         check = %{}
         new_options(checks: [check])
+      end)
+    end
+  end
+
+  describe "setting error_code" do
+    test "error_code is set for positive integers" do
+      options = new_options(error_code: 12)
+      assert options.error_code == 12
+    end
+
+    test "it raises exception when error_code is zero" do
+      assert_raise(ArgumentError, "error_code should be a positive integer", fn ->
+        new_options(error_code: 0)
+      end)
+    end
+
+    test "it raises exception when error_code is negative" do
+      assert_raise(ArgumentError, "error_code should be a positive integer", fn ->
+        new_options(error_code: -1)
+      end)
+    end
+
+    test "it raises exception when error_code is not integer" do
+      assert_raise(ArgumentError, "error_code should be a positive integer", fn ->
+        new_options(error_code: :atom)
       end)
     end
   end

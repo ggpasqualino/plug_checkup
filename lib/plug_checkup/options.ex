@@ -5,6 +5,7 @@ defmodule PlugCheckup.Options do
   defstruct json_encoder: nil,
             timeout: :timer.seconds(1),
             checks: [],
+            error_code: 500,
             pretty: true,
             time_unit: :microsecond
 
@@ -12,6 +13,7 @@ defmodule PlugCheckup.Options do
           json_encoder: module(),
           timeout: pos_integer(),
           checks: list(PlugCheckup.Check.t()),
+          error_code: pos_integer(),
           pretty: boolean(),
           time_unit: :second | :millisecond | :microsecond
         }
@@ -24,7 +26,7 @@ defmodule PlugCheckup.Options do
 
   defp fields_to_change(opts) do
     opts
-    |> Keyword.take([:json_encoder, :timeout, :checks, :pretty, :time_unit])
+    |> Keyword.take([:json_encoder, :timeout, :checks, :error_code, :pretty, :time_unit])
     |> Enum.into(Map.new())
     |> validate!()
   end
@@ -32,6 +34,7 @@ defmodule PlugCheckup.Options do
   defp validate!(fields) do
     validate_optional(fields, :timeout, &validate_timeout!/1)
     validate_optional(fields, :checks, &validate_checks!/1)
+    validate_optional(fields, :error_code, &validate_error_code!/1)
     validate_optional(fields, :pretty, &validate_pretty!/1)
     validate_optional(fields, :time_unit, &validate_time_unit!/1)
     validate_required(fields, :json_encoder, &validate_json_encoder!/1)
@@ -52,6 +55,12 @@ defmodule PlugCheckup.Options do
       validator.(value)
     else
       raise ArgumentError, message: "PlugCheckup expects a #{inspect(key)} configuration"
+    end
+  end
+
+  defp validate_error_code!(error_code) do
+    if !is_integer(error_code) || error_code <= 0 do
+      raise ArgumentError, message: "error_code should be a positive integer"
     end
   end
 

@@ -48,11 +48,11 @@ defmodule PlugCheckup.Mixfile do
     [
       {:plug, "~> 1.4"},
       {:jason, "~> 1.1", only: [:dev, :test]},
-      {:excoveralls, "~> 0.7.5", only: [:dev, :test]},
+      {:excoveralls, "~> 0.12", only: [:dev, :test]},
       {:credo, ">= 0.0.0", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:cowboy, "~> 1.0", only: :dev},
-      {:ex_json_schema, "~> 0.5.5", only: :test}
+      {:plug_cowboy, "~> 2.1", only: :dev},
+      {:ex_json_schema, "~> 0.7", only: :test}
     ]
   end
 end

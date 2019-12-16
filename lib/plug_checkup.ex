@@ -14,6 +14,7 @@ defmodule PlugCheckup do
   end
 
   def call(conn, opts) do
+
     results = Runner.async_run(opts.checks, opts.timeout)
 
     conn

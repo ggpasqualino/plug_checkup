@@ -6,15 +6,19 @@ jobs:
   format:
 
     runs-on: ubuntu-latest
-
-    container:
-      image: elixir:1.9.4-slim
-
+    
     steps:
     - uses: actions/checkout@v2
+    - name: Setup Elixir
+      uses: actions/setup-elixir@v1.2.0
+      with:
+        elixir-version: 1.9.4
+        otp-version: 22.1.4
+        install-hex: false
+        install-rebar: false
     - name: Run Formatter
       run: mix format
-    - name: Commit report
+    - name: Commit formatted files
       run: |
         git config --global user.name 'Elixir Formatter'
         git config --global user.email 'elixir-formatter@users.noreply.github.com'

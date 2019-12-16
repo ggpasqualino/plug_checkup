@@ -1,0 +1,21 @@
+name: Elixir CI
+
+on: push
+
+jobs:
+  format:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: elixir:1.9.4-slim
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Formatter
+      run: mix format
+    - name: Commit report
+      run: |
+        git config --global user.name 'Elixir Formatter'
+        git config --global user.email 'elixir-formatter@users.noreply.github.com'
+        git diff --quiet && git diff --staged --quiet || (git commit -am "Automated code format"; git push)

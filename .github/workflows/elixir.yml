@@ -1,0 +1,59 @@
+name: Elixir CI
+
+env:
+  MIX_ENV: test
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+on: push
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Setup Elixir
+      uses: actions/setup-elixir@v1.2.0
+      with:
+        elixir-version: 1.9.4
+        otp-version: 22.1.4
+        install-hex: false
+        install-rebar: false
+    
+    - name: Run Formatter
+      run: mix format
+    
+    - name: Commit formatted files
+      run: |
+        git config --global user.name 'Elixir Formatter'
+        git config --global user.email 'elixir-formatter@users.noreply.github.com'
+        git diff --quiet && git diff --staged --quiet || (git commit -am "Automated code format"; git push)
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Setup elixir
+        uses: actions/setup-elixir@v1.2.0
+        with:
+          elixir-version: 1.9.4
+          otp-version: 22.1.4
+
+      - name: Install Dependencies
+        run: |
+          mix deps.get
+          
+      - name: Check warnings
+        run: |
+          mix compile --warnings-as-errors
+
+      - name: Run Credo
+        run: |
+          mix credo
+          
+      - name: Run Tests
+        run: |
+          mix coveralls.github

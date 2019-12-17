@@ -16,7 +16,7 @@ defmodule PlugCheckup.OptionsTest do
 
     test "it has default error_code" do
       options = new_options()
-      assert options.error_code  == 300
+      assert options.error_code == 300
     end
 
     test "it has default pretty" do

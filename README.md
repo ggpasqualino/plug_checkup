@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ggpasqualino/plug_checkup.svg?branch=master)](https://travis-ci.org/ggpasqualino/plug_checkup)
+[![Build Status](https://github.com/ggpasqualino/plug_checkup/workflows/Elixir%20CI/badge.svg?branch=master)](https://github.com/ggpasqualino/plug_checkup/actions?query=branch%3Amaster)
 [![Coverage Status](https://coveralls.io/repos/github/ggpasqualino/plug_checkup/badge.svg?branch=master)](https://coveralls.io/github/ggpasqualino/plug_checkup?branch=master)
 ||
 [![Hex version](https://img.shields.io/hexpm/v/plug_checkup.svg)](https://hex.pm/packages/plug_checkup)

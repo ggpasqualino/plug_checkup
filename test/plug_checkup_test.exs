@@ -30,7 +30,7 @@ defmodule PlugCheckupTest do
 
     test "it is 500 when not healthy" do
       response = execute_plug(:not_healthy)
-      assert response.status ==   200
+      assert response.status ==   500
     end
   end
 

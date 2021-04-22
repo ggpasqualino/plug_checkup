@@ -14,7 +14,10 @@ defmodule PlugCheckup do
   end
 
   def call(conn, opts) do
-    results = Runner.async_run(opts.checks, opts.timeout)
+    conn = fetch_query_params(conn)
+
+    results =
+      Runner.async_run(opts.checks, opts.timeout, conn.query_params["check_name_selector"])
 
     conn
     |> put_resp_content_type("application/json")

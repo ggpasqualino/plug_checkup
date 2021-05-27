@@ -93,16 +93,19 @@ defmodule PlugCheckup.Options do
   end
 
   defp validate_json_encoder!(encoder) do
-    unless Code.ensure_compiled?(encoder) do
-      raise ArgumentError,
-            "invalid :json_encoder option. The module #{inspect(encoder)} is not " <>
-              "loaded and could not be found"
-    end
+    with {:module, _module} <- Code.ensure_compiled(encoder),
+         true <- function_exported?(encoder, :encode!, 2) do
+      :ok
+    else
+      {:error, _reason} ->
+        raise ArgumentError,
+              "invalid :json_encoder option. The module #{inspect(encoder)} is not " <>
+                "loaded and could not be found"
 
-    unless function_exported?(encoder, :encode!, 2) do
-      raise ArgumentError,
-            "invalid :json_encoder option. The module #{inspect(encoder)} must " <>
-              "implement encode!/2"
+      false ->
+        raise ArgumentError,
+              "invalid :json_encoder option. The module #{inspect(encoder)} must " <>
+                "implement encode!/2"
     end
   end
 end

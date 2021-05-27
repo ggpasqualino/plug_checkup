@@ -5,7 +5,7 @@ defmodule PlugCheckup.Mixfile do
     [
       app: :plug_checkup,
       version: "0.6.0",
-      elixir: "~> 1.5",
+      elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       description: description(),

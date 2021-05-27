@@ -17,8 +17,8 @@ jobs:
     - name: Setup Elixir
       uses: erlef/setup-beam@v1
       with:
-        elixir-version: 1.9.4
-        otp-version: 22.1.4
+        elixir-version: 1.12.0
+        otp-version: 24.0
         install-hex: false
         install-rebar: false
     
@@ -40,8 +40,8 @@ jobs:
       - name: Setup elixir
         uses: erlef/setup-beam@v1
         with:
-          elixir-version: 1.9.4
-          otp-version: 22.1.4
+          elixir-version: 1.12.0
+          otp-version: 24.0
 
       - name: Install Dependencies
         run: |

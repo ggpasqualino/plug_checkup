@@ -1,6 +1,6 @@
 defmodule PlugCheckup.Options do
   @moduledoc """
-  Defines the options which can be given to initialize PlugCheckup.
+  Defines the options which can be given to initialize `PlugCheckup`.
   """
   defstruct json_encoder: nil,
             timeout: :timer.seconds(1),

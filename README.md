@@ -1,16 +1,20 @@
+# PlugCheckup
+
 [![Build](https://github.com/ggpasqualino/plug_checkup/workflows/Build/badge.svg?branch=master)](https://github.com/ggpasqualino/plug_checkup/actions?query=branch%3Amaster)
 [![Coverage Status](https://coveralls.io/repos/github/ggpasqualino/plug_checkup/badge.svg?branch=master)](https://coveralls.io/github/ggpasqualino/plug_checkup?branch=master)
-||
-[![Hex version](https://img.shields.io/hexpm/v/plug_checkup.svg)](https://hex.pm/packages/plug_checkup)
-[![Hex downloads](https://img.shields.io/hexpm/dt/plug_checkup.svg)](https://hex.pm/packages/plug_checkup)
+[![Module Version](https://img.shields.io/hexpm/v/plug_checkup.svg)](https://hex.pm/packages/plug_checkup)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/plug_checkup/)
+[![Total Download](https://img.shields.io/hexpm/dt/plug_checkup.svg)](https://hex.pm/packages/plug_checkup)
+[![License](https://img.shields.io/hexpm/l/plug_checkup.svg)](https://github.com/ggpasqualino/plug_checkup/blob/master/LICENSE.md)
+[![Last Updated](https://img.shields.io/github/last-commit/ggpasqualino/plug_checkup.svg)](https://github.com/ggpasqualino/plug_checkup/commits/master)
 
-# PlugCheckup
 
 PlugCheckup provides a Plug for adding simple health checks to your app. The [JSON output](#response) is similar to the one provided by the [MiniCheck](https://github.com/workshare/mini-check) Ruby library. It was started to provide [solarisBank](https://www.solarisbank.de/en/) an easy way of monitoring Plug based applications.
 
 ## Usage
 
-- Add the package to "mix.exs"
+Add the package to `mix.exs`:
+
 ```elixir
 defp deps do
   [
@@ -19,7 +23,8 @@ defp deps do
 end
 ```
 
-- Create your [checks](#the-checks)
+Create your [checks](#the-checks):
+
 ```elixir
 defmodule MyHealthChecks do
   def check_db do
@@ -32,7 +37,8 @@ defmodule MyHealthChecks do
 end
 ```
 
-- Forward your health path to PlugCheckup in your Plug Router
+Forward your health path to PlugCheckup in your Plug Router:
+
 ```elixir
 checks = [
   %PlugCheckup.Check{name: "DB", module: MyHealthChecks, function: :check_db},
@@ -47,7 +53,7 @@ forward(
 ```
 
 If you're working with Phoenix, you need to change the syntax slightly to
-accomodate `Phoenix.Router.forward/4`:
+accommodate `Phoenix.Router.forward/4`:
 
 ```elixir
 checks = [
@@ -69,11 +75,20 @@ If you configure the `error_code` option when initializing the plug, the specifi
 
 ## Demo
 
-Check [.iex.exs](.iex.exs) for a demo of plug_checkup in a Plug.Router. The demo can be run as following.
+Check [.iex.exs](https://github.com/ggpasqualino/plug_checkup/blob/master/.iex.exs)
+for a demo of plug_checkup in a `Plug.Router`. The demo can be run as following:
+
 ```sh
 git clone https://github.com/ggpasqualino/plug_checkup
 cd plug_checkup
 mix deps.get
 iex -S mix
 ```
+
 Open your browse either on http://localhost:4000/selfhealth or http://localhost:4000/dependencyhealth
+
+## Copyright and License
+
+Copyright (c) 2018 Guilherme Gonçalves Pasqualino
+
+This software is released under the [MIT License](./LICENSE.md).

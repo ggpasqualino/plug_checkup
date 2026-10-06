@@ -1,8 +1,10 @@
 defmodule PlugCheckup.Check.Formatter do
   @external_resource "priv/schemas/health_check_response.json"
   @schema File.read!("priv/schemas/health_check_response.json")
+
   @moduledoc """
-  Format the given checks into a list of maps which respects the following JSON schema
+  Format the given checks into a list of maps which respects the following JSON schema.
+
   ```json
   #{@schema}
   ```

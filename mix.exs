@@ -1,16 +1,19 @@
 defmodule PlugCheckup.Mixfile do
   use Mix.Project
 
+  @source_url "https://github.com/ggpasqualino/plug_checkup"
+  @version "0.6.0"
+
   def project do
     [
       app: :plug_checkup,
-      version: "0.6.0",
+      version: @version,
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      description: description(),
       package: package(),
       deps: deps(),
+      docs: docs(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
         coveralls: :test,
@@ -19,7 +22,6 @@ defmodule PlugCheckup.Mixfile do
         "coveralls.html": :test
       ],
       name: "PlugCheckup",
-      source_url: "https://github.com/ggpasqualino/plug_checkup"
     ]
   end
 
@@ -31,16 +33,13 @@ defmodule PlugCheckup.Mixfile do
   defp elixirc_paths(_), do: elixirc_paths()
   defp elixirc_paths(), do: ["lib"]
 
-  def description do
-    "PlugCheckup provides a Plug for adding simple health checks to your app."
-  end
-
   def package do
     [
+      description: "PlugCheckup provides a Plug for adding simple health checks to your app.",
       files: ["lib", "priv", "mix.exs", "README.md", "LICENSE"],
       maintainers: ["Guilherme Pasqualino"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/ggpasqualino/plug_checkup"}
+      links: %{"GitHub" => @source_url}
     ]
   end
 
@@ -50,9 +49,22 @@ defmodule PlugCheckup.Mixfile do
       {:jason, "~> 1.1", only: [:dev, :test]},
       {:excoveralls, "~> 0.12", only: [:dev, :test]},
       {:credo, ">= 0.0.0", only: [:dev, :test]},
-      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:plug_cowboy, "~> 2.1", only: :dev},
       {:ex_json_schema, "~> 0.7", only: :test}
+    ]
+  end
+
+  defp docs do
+    [
+      extras: [
+        "LICENSE.md": [title: "License"],
+        "README.md": [title: "Overview"]
+      ],
+      main: "readme",
+      source_url: @source_url,
+      source_ref: "v#{@version}",
+      formatters: ["html"]
     ]
   end
 end

@@ -73,6 +73,8 @@ PlugCheckup should return either 200 or 500 statuses, Content-Type header "appli
 
 If you configure the `error_code` option when initializing the plug, the specified value will be used when an error occurs instead of the 500 status.
 
+When providing a check name in the query param `check_name_selector`, only checks matching the name will be executed.
+
 ## Demo
 
 Check [.iex.exs](https://github.com/ggpasqualino/plug_checkup/blob/master/.iex.exs)

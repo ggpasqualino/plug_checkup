@@ -53,7 +53,7 @@ defmodule PlugCheckup.Check.RunnerTest do
     end
   end
 
-  describe "async_run/2" do
+  describe "async_run/3" do
     test "it executes all checks and returns ok when all checks are successful" do
       checks = [
         %Check{name: "1", module: MyChecks, function: :execute_successfuly},
@@ -77,6 +77,24 @@ defmodule PlugCheckup.Check.RunnerTest do
                   time: _
                 }
               ]} = Runner.async_run(checks, 500)
+    end
+
+    test "it executes checks matching selector query arg" do
+      checks = [
+        %Check{name: "1", module: MyChecks, function: :execute_successfuly},
+        %Check{name: "2", module: MyChecks, function: :execute_successfuly}
+      ]
+
+      assert {:ok,
+              [
+                %Check{
+                  name: "1",
+                  module: MyChecks,
+                  function: :execute_successfuly,
+                  result: :ok,
+                  time: _
+                }
+              ]} = Runner.async_run(checks, 500, "1")
     end
 
     test "it executes all checks and returns error when any check is unsuccessful" do

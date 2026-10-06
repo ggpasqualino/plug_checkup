@@ -5,10 +5,12 @@ defmodule PlugCheckup.Check.Runner do
   """
   alias PlugCheckup.Check
 
-  @spec async_run([PlugCheckup.Check.t()], pos_integer()) :: tuple()
-  def async_run(checks, timeout) do
+  @spec async_run([PlugCheckup.Check.t()], pos_integer(), check_name_selector :: String.t() | nil) ::
+          tuple()
+  def async_run(checks, timeout, check_name_selector \\ nil) do
     results =
       checks
+      |> filter_by_check_selector(check_name_selector)
       |> execute_all(timeout)
       |> Enum.zip(checks)
       |> Enum.map(&task_to_result/1)
@@ -41,4 +43,10 @@ defmodule PlugCheckup.Check.Runner do
   def task_to_result({{:exit, reason}, check}) do
     %{check | result: {:error, reason}}
   end
+
+  defp filter_by_check_selector(checks, check_name_selector)
+  defp filter_by_check_selector(checks, nil), do: checks
+
+  defp filter_by_check_selector(checks, check_name_selector) when is_binary(check_name_selector),
+    do: Enum.filter(checks, &match?(%Check{name: ^check_name_selector}, &1))
 end
